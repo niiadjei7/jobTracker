@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Date, ForeignKey, Text
+from sqlalchemy import Column, Integer, String, Date, ForeignKey, Text, Float
 from sqlalchemy.orm import relationship
 from .database import Base
 from datetime import date
@@ -44,11 +44,22 @@ class JobApplication(Base):
     status = Column(String, default="saved")
     notes = Column(Text)
 
-    user = relationship("User", back_populates="job_applicationss")
+    user = relationship("User", back_populates="job_applications")
 
-class Matches(Base):
-    __tablename__ = "matches"
+class JobMatchScore(Base):
+    __tablename__ = "job_match_scores"
 
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey=("users.id"))
+    user_id = Column(Integer, ForeignKey("users.id"), index=True)
+    job_id = Column(Integer, ForeignKey("job_applications.id"), index=True)
+    resume_id = Column(Integer, ForeignKey("resumes.id"), index=True)
+
+    score = Column(Float, nullable=False)  
+    explanation = Column(Text)            
+    created_at = Column(Date, default=date.today)
+
+    # Relationships (if needed)
+    user = relationship("User")
+    job = relationship("JobApplication")
+    resume = relationship("Resume")
     
