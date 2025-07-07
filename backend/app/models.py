@@ -11,7 +11,7 @@ class User(Base):
     password_hash = Column(String, nullable=False)
     date_created = Column(Date, default=date.today)
 
-    job_applications = relationship("JobApplication", back_populates="user")
+    job_applications = relationship("Application", back_populates="user")
     resumes = relationship("Resume", back_populates="user")
 
     @property
@@ -31,7 +31,7 @@ class Resume(Base):
 
     
 
-class JobApplication(Base):
+class Application(Base):
     __tablename__ = "job_applications"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -60,6 +60,6 @@ class JobMatchScore(Base):
 
     # Relationships (if needed)
     user = relationship("User")
-    job = relationship("JobApplication")
+    job = relationship("Application")
     resume = relationship("Resume")
     

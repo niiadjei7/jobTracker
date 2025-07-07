@@ -7,3 +7,4 @@ __pycache__/
 node_modules/
 postgres_data/
 *.log
+uploaded_resumes/
