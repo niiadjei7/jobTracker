@@ -2,10 +2,24 @@ from fastapi import FastAPI
 from . import models
 from .database import engine
 from .routers import users, resumes, applications
+from fastapi.middleware.cors import CORSMiddleware
 
 
 
 app = FastAPI()
+
+# Allow requests from React dev server
+origins = [
+    "http://localhost:3000",  # React frontend
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,              # or use ["*"] to allow all
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 models.Base.metadata.create_all(bind=engine)
 

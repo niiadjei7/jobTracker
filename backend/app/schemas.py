@@ -4,6 +4,8 @@ from typing import Optional
 
 #User schemas
 class UserBase(BaseModel):
+    first_name: str
+    last_name: str
     email: EmailStr
 
 class UserCreate(UserBase):
@@ -15,6 +17,10 @@ class UserResponse(UserBase):
 
     class config:
         orm_mode = True
+
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: str
 
 #Resume schemas
 class ResumeBase(BaseModel):
